@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @shop.name
+p
+  strong Cd:
+  = @shop.cd
+
+= link_to 'Edit', edit_shop_path(@shop)
+'|
+= link_to 'Back', shops_path

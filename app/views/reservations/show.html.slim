@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Shop:
+  = @reservation.shop
+p
+  strong Execution:
+  = @reservation.execution
+p
+  strong Amount:
+  = @reservation.amount
+p
+  strong Scheduled datetime:
+  = @reservation.scheduled_datetime
+
+= link_to 'Edit', edit_reservation_path(@reservation)
+'|
+= link_to 'Back', reservations_path

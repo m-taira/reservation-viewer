@@ -1,0 +1,27 @@
+h1 Listing reservations
+
+table
+  thead
+    tr
+      th Shop
+      th Execution
+      th Amount
+      th Scheduled datetime
+      th
+      th
+      th
+
+  tbody
+    - @reservations.each do |reservation|
+      tr
+        td = reservation.shop
+        td = reservation.execution
+        td = reservation.amount
+        td = reservation.scheduled_datetime
+        td = link_to 'Show', reservation
+        td = link_to 'Edit', edit_reservation_path(reservation)
+        td = link_to 'Destroy', reservation, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Reservation', new_reservation_path

@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+  title Apparel
+  meta[name="viewport" content="width=device-width,max-scale=1.0,min-scale=1.0"]
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+  body
+    = navbar fluid: true do
+      = vertical do
+        = link_to 'Apparel', '/'
+        = horizontal do
+          = nav as: :pills, class: 'navbar-right' do
+    .container-fluid
+      = alert_box flash[:notice], context: :success if flash[:notice]
+      = alert_box flash[:alert], context: :danger if flash[:alert]
+      = yield
