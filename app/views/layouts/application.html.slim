@@ -1,7 +1,7 @@
 doctype html
 html
   head
-  title Apparel
+  title Reservation-Viewer
   meta[name="viewport" content="width=device-width,max-scale=1.0,min-scale=1.0"]
   = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -9,9 +9,11 @@ html
   body
     = navbar fluid: true do
       = vertical do
-        = link_to 'Apparel', '/'
-        = horizontal do
-          = nav as: :pills, class: 'navbar-right' do
+        = link_to 'Reservation-Viewer', '/'
+      = horizontal do
+        = nav as: :pills, class: 'navbar-right' do
+          = link_to '予約履歴', auto_daily_path(date: Date.today)
+          = link_to '予約状況取得', executions_path
     .container-fluid
       = alert_box flash[:notice], context: :success if flash[:notice]
       = alert_box flash[:alert], context: :danger if flash[:alert]
