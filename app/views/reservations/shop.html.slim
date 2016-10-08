@@ -1,0 +1,16 @@
+h1 = "#{@shop.name}の予約履歴"
+
+- Shop.all.each do |shop|
+  = link_to shop.name, auto_shop_url(id: shop.id)
+  |  /
+table.table
+  tr
+    th
+    - (10..18).each do |hour|
+      th = hour
+    - @reservations.each do |date, reservations|
+      tr
+        th = link_to date, auto_daily_path(date: date)
+        - (10..18).each do |hour|
+          - r = reservations.find { |r| r.scheduled_datetime == (date + hour.hours) }
+          td = r&.amount

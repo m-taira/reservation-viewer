@@ -1,12 +1,17 @@
-p#notice = notice
+h1 = "#{l@execution.created_at}に取得した#{l @execution.execute_datetime.to_date}の予約状況"
 
-p
-  strong Execute datetime:
-  = @execution.execute_datetime
-p
-  strong Kind:
-  = @execution.kind
+table.table
+  tr
+    th
+    -(10..18).each do |hour|
+      th = hour
 
-= link_to 'Edit', edit_execution_path(@execution)
-'|
-= link_to 'Back', executions_path
+  - @reservations.each do |shop_name, reservations|
+    tr
+      th = shop_name
+      -(10..18).each do |hour|
+        - r = reservations.find {|r| r.scheduled_datetime.hour == hour}
+        td = r&.amount
+
+
+= link_to 'Back', executions_path, class: 'back-button'

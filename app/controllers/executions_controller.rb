@@ -4,12 +4,14 @@ class ExecutionsController < ApplicationController
   # GET /executions
   # GET /executions.json
   def index
-    @executions = Execution.all
+    @executions = Execution.with_kind(:manual).order(:execute_datetime)
+    @execution = Execution.new
   end
 
   # GET /executions/1
   # GET /executions/1.json
   def show
+    @reservations = @execution.reservations.group_by{|x|x.shop.name}
   end
 
   # GET /executions/new
@@ -24,14 +26,17 @@ class ExecutionsController < ApplicationController
   # POST /executions
   # POST /executions.json
   def create
-    @execution = Execution.new(execution_params)
+    @execution = Execution.new
+
+    date = Date.parse(execution_params[:execute_datetime]) rescue nil
 
     respond_to do |format|
-      if @execution.save
+      if date && @execution.manual(date)
         format.html { redirect_to @execution, notice: 'Execution was successfully created.' }
         format.json { render :show, status: :created, location: @execution }
       else
-        format.html { render :new }
+        @executions = Execution.with_kind(:manual)
+        format.html { render :index }
         format.json { render json: @execution.errors, status: :unprocessable_entity }
       end
     end

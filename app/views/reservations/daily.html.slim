@@ -1,0 +1,14 @@
+h1 = "#{l @date}の予約履歴"
+= link_to "<< #{@date - 1}", auto_daily_path(date: @date - 1)
+= link_to " #{@date + 1} >>", auto_daily_path(date: @date + 1)
+table.table
+  tr
+    th
+    - (10..18).each do |hour|
+      th = hour
+  - Shop.all.each do |shop|
+    tr
+      th = link_to shop.name, auto_shop_url(shop.id)
+      - (10..18).each do |hour|
+        - r = @reservations.find { |r| r.shop_id == shop.id && r.scheduled_datetime == (@date + hour.hours) }
+        td = r&.amount

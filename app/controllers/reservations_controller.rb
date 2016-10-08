@@ -1,6 +1,16 @@
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :edit, :update, :destroy]
 
+  def daily
+    @date = Date.parse(params[:date]) rescue Date.today
+    @reservations = Reservation.joins(:execution).where(executions: { kind: :auto }).where(scheduled_datetime: (@date.beginning_of_day..@date.end_of_day)).order(:scheduled_datetime)
+  end
+
+  def shop
+    @shop = Shop.find(params[:id])
+    @reservations = Reservation.joins(:execution).where(executions: { kind: :auto }).where(shop_id: @shop.id).order(:scheduled_datetime).group_by{|x| x.scheduled_datetime.to_date }
+  end
+
   # GET /reservations
   # GET /reservations.json
   def index

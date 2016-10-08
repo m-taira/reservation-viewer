@@ -1,23 +1,22 @@
-h1 Listing executions
+h1 特定の日の予約状況
 
-table
+= form_for @execution do |f|
+  = f.text_field :execute_datetime
+  = f.submit '取得する', class: 'submit-button'
+
+table.table
   thead
     tr
-      th Execute datetime
-      th Kind
-      th
+      th 取得日
+      th 予約日
       th
       th
 
   tbody
     - @executions.each do |execution|
       tr
-        td = execution.execute_datetime
-        td = execution.kind
-        td = link_to 'Show', execution
-        td = link_to 'Edit', edit_execution_path(execution)
-        td = link_to 'Destroy', execution, data: { confirm: 'Are you sure?' }, method: :delete
+        td = l execution.created_at
+        td = l execution.execute_datetime.to_date
+        td = link_to 'Show', execution, class: 'show-button'
+        td = link_to 'Destroy', execution, data: { confirm: 'Are you sure?' }, method: :delete, class: 'destroy-button'
 
-br
-
-= link_to 'New Execution', new_execution_path
